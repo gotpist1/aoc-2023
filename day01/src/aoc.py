@@ -4,20 +4,22 @@ from os import environ
 mapped_digits = {"one": "1", "two": "2", "three": "3", "four": "4", "five": "5",
                  "six": "6", "seven": "7", "eight": "8", "nine": "9"}
 
+
 def get_calibration_values(line):
     first_num = re.findall(r'\d', line)[0]
     last_num = re.findall(r'\d', line)[-1]
     print(first_num, last_num)
     return int(first_num + last_num)
 
+
 def get_calibration_values_with_words(line):
     line = (line.replace("oneight", "oneeight")
-            .replace("threeight","threeeight")
-            .replace("fiveight","fiveeight")
-            .replace("nineight","nineeight")
-            .replace("twone","twoone")
-            .replace("sevenine","sevennine")
-            .replace("eightwo","eighttwo"))
+            .replace("threeight", "threeeight")
+            .replace("fiveight", "fiveeight")
+            .replace("nineight", "nineeight")
+            .replace("twone", "twoone")
+            .replace("sevenine", "sevennine")
+            .replace("eightwo", "eighttwo"))
     pattern = r'(?:one|two|three|four|five|six|seven|eight|nine|\d)'
     match = re.findall(pattern, line)
     print(match)
@@ -31,7 +33,6 @@ def get_calibration_values_with_words(line):
         combined = first_num + last_num
         print(combined, line)
         return int(combined)
-
 
 
 def getSolutionPart1(input_list):
@@ -59,4 +60,3 @@ if part == 'part1':
     print(getSolutionPart1(file_input))
 else:
     print(getSolutionPart2(file_input))
-

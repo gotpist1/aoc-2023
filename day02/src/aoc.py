@@ -32,25 +32,38 @@ class Game:
                     blue = value
         return red * green * blue
 
+
 def get_subset_list_map(subset_list):
     tmp_list = []
     for subset in subset_list:
         sb_map = {}
         entries = subset.split(",")
+        print(entries)
         for entry in entries:
             tmp = entry.strip().split(" ")
             sb_map[tmp[1]] = int(tmp[0])
         tmp_list.append(sb_map)
     return tmp_list
 
+
+def get_subset_list_map2(subset_list):
+    tmp_list = []
+    for entry in [subset.split(",") for subset in subset_list]:
+        sb_map = {key[1]: int(key[0]) for key in [key for row in entry for key in [row.strip().split(" ")]]}
+        tmp_list.append(sb_map)
+    return tmp_list
+
+
 def map_to_game(line):
     tmp = line.split(":")
     id = tmp[0].replace("Game ", "")
     subset_list = [x.strip() for x in tmp[1].split(";")]
-    subset_list_map = get_subset_list_map(subset_list)
+    subset_list_map = get_subset_list_map2(subset_list)
     return Game(id, subset_list_map)
+
+
 def getSolutionPart1(input_list):
-    #2512 answer
+    # 2512 answer
     scrubbed = list(map(lambda x: x.rstrip(), input_list))
     games = [map_to_game(line) for line in scrubbed]
     valid_game_ids = [int(game.id) for game in games if game.is_valid()]
@@ -58,14 +71,14 @@ def getSolutionPart1(input_list):
 
 
 def getSolutionPart2(input_list):
-    #67335 answer
+    # 67335 answer
     scrubbed = list(map(lambda x: x.rstrip(), input_list))
     games = [map_to_game(line) for line in scrubbed]
     game_powers = [game.get_power() for game in games]
     return sum(game_powers)
 
 
-with open('input.txt', mode="r") as f:
+with open('test_input.txt', mode="r") as f:
     file_input = f.readlines()
 
 part = environ.get('part')
