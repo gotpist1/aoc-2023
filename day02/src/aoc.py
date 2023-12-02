@@ -10,27 +10,15 @@ class Game:
 
     def is_valid(self):
         for cube_subset in self.cube_subsets:
-            for key in cube_subset:
-                value = cube_subset[key]
+            for key, value in cube_subset.items():
                 value_in_bag = bag_content[key]
                 if value > value_in_bag:
                     return False
         return True
 
     def get_power(self):
-        red = 0
-        green = 0
-        blue = 0
-        for cube_subset in self.cube_subsets:
-            for key in cube_subset:
-                value = cube_subset[key]
-                if key == "red" and value > red:
-                    red = value
-                elif key == "green" and value > green:
-                    green = value
-                elif key == "blue" and value > blue:
-                    blue = value
-        return red * green * blue
+        max_dict = {k: max(d[k] for d in self.cube_subsets if k in d) for k in bag_content.keys()}
+        return max_dict["red"] * max_dict["green"] * max_dict["blue"]
 
 
 def get_subset_list_map(subset_list):
@@ -45,8 +33,7 @@ def map_to_game(line):
     tmp = line.split(":")
     id = tmp[0].replace("Game ", "")
     subset_list = [x.strip() for x in tmp[1].split(";")]
-    subset_list_map = get_subset_list_map(subset_list)
-    return Game(id, subset_list_map)
+    return Game(id, get_subset_list_map(subset_list))
 
 
 def getSolutionPart1(input_list):
@@ -65,7 +52,7 @@ def getSolutionPart2(input_list):
     return sum(game_powers)
 
 
-with open('test_input.txt', mode="r") as f:
+with open('input.txt', mode="r") as f:
     file_input = f.readlines()
 
 part = environ.get('part')
