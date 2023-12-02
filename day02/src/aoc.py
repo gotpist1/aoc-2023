@@ -35,19 +35,6 @@ class Game:
 
 def get_subset_list_map(subset_list):
     tmp_list = []
-    for subset in subset_list:
-        sb_map = {}
-        entries = subset.split(",")
-        print(entries)
-        for entry in entries:
-            tmp = entry.strip().split(" ")
-            sb_map[tmp[1]] = int(tmp[0])
-        tmp_list.append(sb_map)
-    return tmp_list
-
-
-def get_subset_list_map2(subset_list):
-    tmp_list = []
     for entry in [subset.split(",") for subset in subset_list]:
         sb_map = {key[1]: int(key[0]) for key in [key for row in entry for key in [row.strip().split(" ")]]}
         tmp_list.append(sb_map)
@@ -58,7 +45,7 @@ def map_to_game(line):
     tmp = line.split(":")
     id = tmp[0].replace("Game ", "")
     subset_list = [x.strip() for x in tmp[1].split(";")]
-    subset_list_map = get_subset_list_map2(subset_list)
+    subset_list_map = get_subset_list_map(subset_list)
     return Game(id, subset_list_map)
 
 
