@@ -22,7 +22,6 @@ def get_calibration_values_with_words(line):
             .replace("eightwo", "eighttwo"))
     pattern = r'(?:one|two|three|four|five|six|seven|eight|nine|\d)'
     match = re.findall(pattern, line)
-    print(match)
     if match:
         first_num = match[0]
         last_num = match[-1]
@@ -31,7 +30,6 @@ def get_calibration_values_with_words(line):
         if last_num in mapped_digits.keys():
             last_num = mapped_digits[last_num]
         combined = first_num + last_num
-        print(combined, line)
         return int(combined)
 
 
